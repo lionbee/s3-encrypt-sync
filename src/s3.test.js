@@ -1,6 +1,6 @@
 const AWSMock = require("aws-sdk-mock");
 
-const { getS3Downloader, getS3Keys } = require("./s3");
+const { getS3Downloader, getS3Keys, uploadS3Object } = require("./s3");
 
 describe("Tests for s3 keys", () => {
   const mockListKeys = jest.fn();
@@ -80,5 +80,43 @@ describe("Tests for s3 download", () => {
     await s3Download("TestBucket", [testKey]);
 
     expect(fileWriter).toBeCalledWith(testKey, testBody);
+  });
+});
+
+describe("Test uploadS3Object", () => {
+  const mockPutObject = jest.fn();
+  AWSMock.mock("S3", "putObject", mockPutObject);
+
+  const Bucket = "Test";
+  const Key = "some/test/key";
+
+  beforeEach(jest.resetAllMocks);
+
+  it("Bucket and key is correct", async () => {
+    mockPutObject.mockResolvedValue({});
+
+    await uploadS3Object({ Bucket, Key }, "test");
+
+    expect(mockPutObject).toBeCalledWith(
+      expect.objectContaining({ Bucket, Key }),
+      expect.any(Function)
+    );
+  });
+
+  it("Data is base64 encoded", async () => {
+    mockPutObject.mockResolvedValue({});
+
+    await uploadS3Object({ Bucket, Key }, "test");
+
+    expect(mockPutObject).toBeCalledWith(
+      expect.objectContaining({ Body: "dGVzdA==" }),
+      expect.any(Function)
+    );
+  });
+
+  it("Errors bubble", async () => {
+    mockPutObject.mockRejectedValue("dead");
+
+    await expect(uploadS3Object({ Bucket, Key }, "test")).rejects.toBe("dead");
   });
 });

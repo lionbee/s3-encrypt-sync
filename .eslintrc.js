@@ -3,12 +3,9 @@ module.exports = {
     commonjs: true,
     es6: true,
     node: true,
-    jest: true,
+    jest: true
   },
-  extends: [
-    'standard',
-    "plugin:prettier/recommended"
-  ],
+  extends: ['standard', 'plugin:prettier/recommended'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly'
@@ -16,8 +13,8 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2018
   },
-  plugins: ["prettier"],
+  plugins: ['prettier'],
   rules: {
-    "prettier/prettier": "error"
+    'prettier/prettier': 'error'
   }
 }

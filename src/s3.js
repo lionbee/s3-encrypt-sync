@@ -13,7 +13,7 @@ function getS3() {
 /**
  * @param {Object} options
  * @param {string} options.Bucket
- * @param {string} options.ContinuationToken 
+ * @param {string} options.ContinuationToken
  * @param {number} options.MaxKeys
  */
 async function getS3Keys({ Bucket, ContinuationToken, MaxKeys }) {
@@ -83,7 +83,29 @@ function getS3Downloader(fileWriter, concurrency) {
   };
 }
 
+/**
+ * @param {Object} source
+ * @param {string} source.Bucket
+ * @param {string} source.Key
+ * @param {string} targetRoot
+ */
+async function uploadS3Object({ Bucket, Key }, data) {
+  const s3 = getS3();
+
+  const buffer = Buffer.from(data);
+  const Body = buffer.toString("base64");
+
+  await s3
+    .putObject({
+      Bucket,
+      Key,
+      Body
+    })
+    .promise();
+}
+
 module.exports = {
   getS3Keys,
-  getS3Downloader
+  getS3Downloader,
+  uploadS3Object
 };

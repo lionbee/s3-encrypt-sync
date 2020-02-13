@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 /**
- * @param {string} targetRoot 
+ * @param {string} targetRoot
  * @returns {getFileWriter~fileWriter}
  */
 function getFileWriter(targetRoot) {
@@ -19,6 +19,31 @@ function getFileWriter(targetRoot) {
   };
 }
 
+/**
+ * @param {string} dir
+ * @returns {string[]}
+ */
+function walkDir(dir) {
+  const pwd = process.cwd();
+  const files = fs.readdirSync(dir);
+  const filelist = [];
+  files.forEach(file => {
+    const filePath = path.join(dir, file);
+    if (fs.statSync(filePath).isDirectory()) {
+      filelist.push(...walkDir(filePath));
+    } else {
+      filelist.push(path.relative(pwd, filePath));
+    }
+  });
+  return filelist;
+}
+
+async function readFileBase64(path) {
+  return fs.promises.readFile(path);
+}
+
 module.exports = {
-  getFileWriter
+  getFileWriter,
+  readFileBase64,
+  walkDir
 };
