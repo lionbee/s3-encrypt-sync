@@ -10,6 +10,12 @@ function getS3() {
   return s3Cache;
 }
 
+/**
+ * @param {Object} options
+ * @param {string} options.Bucket
+ * @param {string} options.ContinuationToken 
+ * @param {number} options.MaxKeys
+ */
 async function getS3Keys({ Bucket, ContinuationToken, MaxKeys }) {
   const s3 = getS3();
   const response = await s3
