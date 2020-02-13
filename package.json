@@ -1,0 +1,25 @@
+{
+  "name": "s3-encrypt-sync",
+  "version": "1.0.0",
+  "description": "Sync data from one s3 bucket to another, while kms encrypting the target",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "aws",
+    "s3",
+    "kms"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/jest": "^25.1.2",
+    "aws-sdk": "^2.617.0",
+    "aws-sdk-mock": "^5.0.0",
+    "bluebird": "^3.7.2",
+    "eslint": "^6.8.0",
+    "jest": "^25.1.0",
+    "prettier": "^1.19.1"
+  }
+}
