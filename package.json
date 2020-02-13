@@ -4,7 +4,8 @@
   "description": "Sync data from one s3 bucket to another, while kms encrypting the target",
   "main": "src/index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint --max-warnings=0 --fix src/**/*"
   },
   "keywords": [
     "aws",
@@ -14,11 +15,20 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "^3.7.2"
+  },
+  "devDependencies": {
     "@types/jest": "^25.1.2",
     "aws-sdk": "^2.617.0",
     "aws-sdk-mock": "^5.0.0",
-    "bluebird": "^3.7.2",
     "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
     "jest": "^25.1.0",
     "prettier": "^1.19.1"
   }

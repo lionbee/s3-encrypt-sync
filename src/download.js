@@ -8,20 +8,23 @@ Create a second module to encrypt all downloaded objects using KMS with a user-d
 Write an integration test to demonstrate full functionality of both modules
  */
 
-const { getFileWriter } = require('./fs');
-const { getS3Downloader, getS3Keys } = require('./s3');
+const { getFileWriter } = require("./fs");
+const { getS3Downloader, getS3Keys } = require("./s3");
 
 const DEFAULT_CONCURRENCY = 4;
 
 async function downloadS3Content(Bucket, targetRoot, concurrency) {
-    const fileWriter = getFileWriter(targetRoot);
-    const downloadFromS3 = getS3Downloader(fileWriter, concurrency || DEFAULT_CONCURRENCY);
+  const fileWriter = getFileWriter(targetRoot);
+  const downloadFromS3 = getS3Downloader(
+    fileWriter,
+    concurrency || DEFAULT_CONCURRENCY
+  );
 
-    return await getS3Keys({
-        Bucket
-    }).then(keys => downloadFromS3(Bucket, keys));
+  return getS3Keys({
+    Bucket
+  }).then(keys => downloadFromS3(Bucket, keys));
 }
 
 module.exports = {
-    downloadS3Content
-}
+  downloadS3Content
+};
