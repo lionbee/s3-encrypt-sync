@@ -3,10 +3,15 @@ const { readFile, walkDir } = require("./fs");
 const { encrypt } = require("./kms");
 const { uploadS3Object } = require("./s3");
 
+/**
+ * @param {string} srcDir
+ * @param {string} Bucket
+ * @param {string} kmskeyId
+ */
 async function encryptAndUpload(srcDir, Bucket, kmskeyId) {
   const filePaths = await walkDir(srcDir);
 
-  const objects = await promiseMap(
+  await promiseMap(
     filePaths,
     async p => {
       const content = await readFile(p.relativePath);
@@ -15,7 +20,6 @@ async function encryptAndUpload(srcDir, Bucket, kmskeyId) {
     },
     4
   );
-  console.log(objects);
 }
 
 module.exports = {

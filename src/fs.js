@@ -3,7 +3,6 @@ const path = require("path");
 
 /**
  * @param {string} targetRoot
- * @returns {getFileWriter~fileWriter}
  */
 function getFileWriter(targetRoot) {
   /**
@@ -21,7 +20,7 @@ function getFileWriter(targetRoot) {
 
 /**
  * @param {string} dir
- * @returns {string[]}
+ * @returns {Array.<{key: Number, relativePath: String}>}
  */
 function walkDir(dir, baseDir) {
   if (!baseDir) baseDir = dir;
@@ -42,6 +41,9 @@ function walkDir(dir, baseDir) {
   return filelist;
 }
 
+/**
+ * @param {string} path
+ */
 async function readFile(path) {
   return fs.promises.readFile(path);
 }

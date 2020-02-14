@@ -67,12 +67,11 @@ async function downloadS3Object({ Bucket, Key }, fileWriter) {
 /**
  * @param {FileWriter} fileWriter
  * @param {number} [concurrency=4]
- * @returns {getS3Downloader~downloadS3Objects}
  */
 function getS3Downloader(fileWriter, concurrency) {
   /**
    * @param {string} Bucket
-   * @param {string[]} keys
+   * @param {Promise<Array<string>>} keys
    */
   return async function downloadS3Objects(Bucket, keys) {
     return promiseMap(

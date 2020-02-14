@@ -8,6 +8,10 @@ function getKMS() {
   return kmsCache;
 }
 
+/**
+ * @param {string} keyId
+ * @param {string} plaintext
+ */
 async function encrypt(keyId, plaintext) {
   const kms = getKMS();
   const result = await kms

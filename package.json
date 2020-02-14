@@ -2,6 +2,9 @@
   "name": "s3-encrypt-sync",
   "version": "1.0.0",
   "description": "Sync data from one s3 bucket to another, while kms encrypting the target",
+  "files": [
+    "src"
+  ],
   "main": "src/index.js",
   "scripts": {
     "precommit": "lint-staged && npm test",
@@ -16,8 +19,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bluebird": "^3.7.2",
-    "lint-staged": "^10.0.7"
+    "bluebird": "^3.7.2"
   },
   "devDependencies": {
     "@types/jest": "^25.1.2",
@@ -33,11 +35,18 @@
     "eslint-plugin-standard": "^4.0.1",
     "husky": "^4.2.3",
     "jest": "^25.1.0",
+    "lint-staged": "^10.0.7",
     "prettier": "^1.19.1"
   },
   "husky": {
     "hooks": {
       "pre-commit": "npm run precommit"
     }
+  },
+  "jest": {
+      "collectCoverageFrom": [
+        "src/**/*.js",
+        "!src/**/*.test.js"
+      ]
   }
 }
