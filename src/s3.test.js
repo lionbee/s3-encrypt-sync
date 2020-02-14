@@ -92,24 +92,13 @@ describe("Test uploadS3Object", () => {
 
   beforeEach(jest.resetAllMocks);
 
-  it("Bucket and key is correct", async () => {
+  it("Bucket, key and data is correct", async () => {
     mockPutObject.mockResolvedValue({});
 
-    await uploadS3Object({ Bucket, Key }, "test");
+    await uploadS3Object({ Bucket, Key }, "dGVzdA==");
 
     expect(mockPutObject).toBeCalledWith(
-      expect.objectContaining({ Bucket, Key }),
-      expect.any(Function)
-    );
-  });
-
-  it("Data is base64 encoded", async () => {
-    mockPutObject.mockResolvedValue({});
-
-    await uploadS3Object({ Bucket, Key }, "test");
-
-    expect(mockPutObject).toBeCalledWith(
-      expect.objectContaining({ Body: "dGVzdA==" }),
+      expect.objectContaining({ Bucket, Key, Body: "dGVzdA==" }),
       expect.any(Function)
     );
   });

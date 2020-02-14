@@ -23,27 +23,31 @@ function getFileWriter(targetRoot) {
  * @param {string} dir
  * @returns {string[]}
  */
-function walkDir(dir) {
+function walkDir(dir, baseDir) {
+  if (!baseDir) baseDir = dir;
   const pwd = process.cwd();
   const files = fs.readdirSync(dir);
   const filelist = [];
   files.forEach(file => {
     const filePath = path.join(dir, file);
     if (fs.statSync(filePath).isDirectory()) {
-      filelist.push(...walkDir(filePath));
+      filelist.push(...walkDir(filePath, baseDir));
     } else {
-      filelist.push(path.relative(pwd, filePath));
+      filelist.push({
+        key: path.relative(baseDir, filePath),
+        relativePath: path.relative(pwd, filePath)
+      });
     }
   });
   return filelist;
 }
 
-async function readFileBase64(path) {
+async function readFile(path) {
   return fs.promises.readFile(path);
 }
 
 module.exports = {
   getFileWriter,
-  readFileBase64,
+  readFile,
   walkDir
 };

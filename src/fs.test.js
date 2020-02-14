@@ -2,12 +2,12 @@ const mkdir = jest.fn();
 const writeFile = jest.fn();
 const readdirSync = jest.fn();
 const statSync = jest.fn();
-const readFile = jest.fn();
+const mockReadFile = jest.fn();
 
 const mockedFS = {
   promises: {
     mkdir,
-    readFile,
+    readFile: mockReadFile,
     writeFile
   },
   readdirSync,
@@ -16,7 +16,7 @@ const mockedFS = {
 
 jest.mock("fs", () => mockedFS);
 
-const { getFileWriter, readFileBase64, walkDir } = require("./fs");
+const { getFileWriter, readFile, walkDir } = require("./fs");
 
 describe("walkDir tests", () => {
   beforeEach(jest.resetAllMocks);
@@ -33,7 +33,16 @@ describe("walkDir tests", () => {
       .mockReturnValueOnce({ isDirectory: getDirectoryIndicator(false) });
 
     expect(walkDir("./test")).toEqual(
-      expect.arrayContaining(["test/afile.txt", "test/adir/another.txt"])
+      expect.arrayContaining([
+        {
+          key: "afile.txt",
+          relativePath: "test/afile.txt"
+        },
+        {
+          key: "adir/another.txt",
+          relativePath: "test/adir/another.txt"
+        }
+      ])
     );
   });
 });
@@ -67,9 +76,9 @@ describe("Filewriter tests", () => {
 
 describe("readFileBase64 tests", () => {
   it("Integration", async () => {
-    readFile.mockReturnValueOnce("test");
-    await readFileBase64("/test/path");
+    mockReadFile.mockReturnValueOnce("test");
+    await readFile("/test/path");
 
-    expect(readFile).toBeCalledWith("/test/path");
+    expect(mockReadFile).toBeCalledWith("/test/path");
   });
 });

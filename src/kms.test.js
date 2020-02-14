@@ -21,9 +21,7 @@ describe("KMS ecnryption test", () => {
 
   it("Returns expected values as base64", async () => {
     mockEncrypt.mockResolvedValueOnce({
-      CiphertextBlob: {
-        buffer: Buffer.from("test")
-      }
+      CiphertextBlob: Buffer.from("test")
     });
     const result = await encrypt("testKey", "some content");
     expect(result).toBe("dGVzdA==");

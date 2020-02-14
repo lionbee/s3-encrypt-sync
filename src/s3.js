@@ -84,22 +84,19 @@ function getS3Downloader(fileWriter, concurrency) {
 }
 
 /**
- * @param {Object} source
- * @param {string} source.Bucket
- * @param {string} source.Key
- * @param {string} targetRoot
+ * @param {Object} target
+ * @param {string} target.Bucket
+ * @param {string} target.Key
+ * @param {string} base64Data
  */
-async function uploadS3Object({ Bucket, Key }, data) {
+async function uploadS3Object({ Bucket, Key }, base64Data) {
   const s3 = getS3();
-
-  const buffer = Buffer.from(data);
-  const Body = buffer.toString("base64");
 
   await s3
     .putObject({
       Bucket,
       Key,
-      Body
+      Body: base64Data
     })
     .promise();
 }

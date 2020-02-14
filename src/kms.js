@@ -17,7 +17,7 @@ async function encrypt(keyId, plaintext) {
     })
     .promise();
 
-  return result.CiphertextBlob.buffer.toString("base64");
+  return result.CiphertextBlob.toString("base64");
 }
 
 module.exports = {
