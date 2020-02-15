@@ -25,9 +25,3 @@ async function encryptAndUpload(srcDir, Bucket, kmskeyId) {
 module.exports = {
   encryptAndUpload
 };
-
-// encryptAndUpload(
-//   "/Users/leon/temp",
-//   "leon.upload.test",
-//   "arn:aws:kms:ap-southeast-2:772458536205:key/b749b3c3-9454-467e-8481-336c15cfa224"
-// ).catch(console.error);
